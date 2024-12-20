@@ -8,7 +8,7 @@ import { Download } from "lucide-react";
 import Dropzone from "react-dropzone";
 
 import { Libre_Baskerville } from "next/font/google";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 
 import { useToast } from "@/hooks/use-toast";
 
@@ -38,6 +38,9 @@ export default function Home() {
 
 	//state for handling dropzone focus
 	const [dropzone_focused, setdropzoneFocused] = useState<boolean>(false);
+
+	//ref for add more files input element
+	const add_more_files_ref = useRef<null | HTMLInputElement>(null);
 
 	//state for managing file size limit
 	const [max_file_size, setMaxFileSize] = useState(false);
@@ -171,6 +174,14 @@ export default function Home() {
 	return (
 		<>
 			<section className="flex flex-col items-center justify-center p-4 space-y-8">
+				<div>
+					<img
+						src="/images/wordify.jpeg"
+						width={300}
+						height={300}
+						className="rounded-full"
+					/>
+				</div>
 				<div
 					className={`text-center font-semibold text-2xl mt-8 ${libre_baskerville.className}`}
 				>
@@ -221,6 +232,9 @@ export default function Home() {
 						<div className="container mx-auto flex items-center justify-end my-3">
 							<Button
 								variant={"default"}
+								onClick={() =>
+									add_more_files_ref.current?.click()
+								}
 								className={`py-5 ${
 									loading
 										? "cursor-not-allowed"
@@ -229,19 +243,20 @@ export default function Home() {
 							>
 								<Plus className="mx-1 size-5 text-white" />
 								Add more files
-								<input
-									type="file"
-									accept="jpg, .jpeg, .png"
-									multiple
-									className={`hidden ${
-										loading
-											? "cursor-not-allowed"
-											: "cursor-pointer"
-									}`}
-									disabled={loading ? true : false}
-									onChange={handleSelectedFile}
-								/>
 							</Button>
+							<input
+								type="file"
+								ref={add_more_files_ref}
+								accept="jpg, .jpeg, .png"
+								multiple
+								className={`hidden ${
+									loading
+										? "cursor-not-allowed"
+										: "cursor-pointer"
+								}`}
+								disabled={loading ? true : false}
+								onChange={handleSelectedFile}
+							/>
 						</div>
 						{files.map((file, index) => (
 							<div
@@ -312,13 +327,13 @@ export default function Home() {
 								}
 								title={`${
 									loading
-										? "Converting images to pdf..."
-										: "Convert file"
+										? "Extracting text from image(s)..."
+										: "Extract text from image"
 								}`}
 							>
 								{loading ? (
 									<>
-										{"Converting..."}
+										{"Extracting..."}
 										<svg
 											aria-hidden="true"
 											className="w-5 h-5 text-gray-200 animate-spin fill-white ml-3"
@@ -338,7 +353,7 @@ export default function Home() {
 									</>
 								) : (
 									<>
-										Convert
+										Extract
 										<span className="mx-1">-&gt;</span>
 									</>
 								)}
