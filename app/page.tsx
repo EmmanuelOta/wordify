@@ -177,8 +177,8 @@ export default function Home() {
 				<div>
 					<img
 						src="/images/wordify.jpeg"
-						width={300}
-						height={300}
+						width={200}
+						height={200}
 						className="rounded-full"
 					/>
 				</div>
