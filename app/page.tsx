@@ -206,7 +206,7 @@ export default function Home() {
 				)}
 
 				{files.length !== 0 && (
-					<div className="flex flex-col items-center justify-center p-4 bg-gradient-to-l from-zinc-100 to-zinc-200 rounded-lg w-[95%] md:w-[80%]">
+					<div className="flex flex-col items-center justify-center p-4 bg-gradient-to-l from-zinc-50 to-zinc-100 rounded-lg w-[95%] md:w-[80%]">
 						{/*Add more files button */}
 						<div className="container mx-auto flex items-center justify-end my-3">
 							<Button
@@ -349,12 +349,12 @@ export default function Home() {
 				)}
 
 				{pdf_file && !files && (
-					<div className="flex flex-col bg-gradient-to-l from-zinc-100 to-zinc-200 items-center justify-center p-4 rounded-lg w-[95%] md:w-[80%]">
+					<div className="flex flex-col bg-gradient-to-l from-zinc-50 to-zinc-100 items-center justify-center p-4 rounded-lg w-[95%] md:w-[80%]">
 						<h4 className="font-medium text-2xl text-zinc-800 text-center m-5">
 							Download your PDF files
 						</h4>
-						<div className="my-4 flex flex-col items-center justify-center bg-gradient-to-b from-zinc-300 to-zinc-400 rounded-lg border border-slate-400">
-							<div className="w-full mx-5 flex flex-row justify-between align-center border border-slate-400 rounded-lg p-3 text-center text-zinc-800 bg-gradient-to-r from-zinc-400 to-zinc-200">
+						<div className="my-4 flex flex-col items-center justify-center bg-gradient-to-b from-zinc-100 via-white to-zinc-200 rounded-lg border border-zinc-200">
+							<div className="w-full mx-5 flex flex-row justify-between align-center border border-zinc-300 rounded-lg p-3 text-center text-zinc-800 bg-gradient-to-r from-zinc-400 to-zinc-200">
 								<div
 									className="font-semibold w-full flex flex-row align-baseline items-center truncate mx-1 md:mx-7"
 									title={`wordify-pdf.pdf`}
@@ -399,10 +399,11 @@ export default function Home() {
 								</Button>
 							</div>
 
-							<div className="container p-2 rounded-lg border border-slate-300 flex flex-row items-center justify-between w-full my-2">
+							<div className="container p-2 rounded-lg border border-zinc-300 flex flex-row items-center justify-between w-full my-2">
 								<Button
+									variant={"default"}
 									className={
-										"flex flex-row p-3 text-white font-normal mx-5 bg-slate-800 rounded-xl cursor-pointer [&>*:last-child]:hover:translate-y-1 [&>*:last-child]:ease-in-out [&>*:last-child]:duration-200 hover:bg-slate-700 my-2"
+										"[&>*:last-child]:hover:translate-y-1 [&>*:last-child]:ease-in-out [&>*:last-child]:duration-200 my-2"
 									}
 									onClick={downloadAllFiles}
 									title={"Download PDF"}
