@@ -180,8 +180,8 @@ export default function Home() {
 								<div
 									className={
 										dropzone_focused
-											? "bg-zinc-100 flex flex-col justify-center items-center my-9 mx-9 py-9 p-20 border border-zinc-300 md:ml-20 md:p-15 lg:p-36 rounded-lg"
-											: "bg-zinc-200 flex flex-col justify-center items-center my-9 mx-9 py-9 p-20 border border-zinc-300 md:ml-20 md:p-15 lg:p-36 rounded-lg"
+											? "bg-zinc-50 flex flex-col justify-center items-center my-9 mx-9 py-9 p-20 border border-zinc-300 md:ml-20 md:p-15 lg:p-36 rounded-lg"
+											: "bg-zinc-100 flex flex-col justify-center items-center my-9 mx-9 py-9 p-20 border border-zinc-300 md:ml-20 md:p-15 lg:p-36 rounded-lg"
 									}
 									{...getRootProps()}
 								>
