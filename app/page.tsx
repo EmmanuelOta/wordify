@@ -5,6 +5,7 @@ import { Plus } from "lucide-react";
 import { Image } from "lucide-react";
 import { File } from "lucide-react";
 import { Download } from "lucide-react";
+import { ChevronRight } from "lucide-react";
 import Dropzone from "react-dropzone";
 
 import { Libre_Baskerville } from "next/font/google";
@@ -405,6 +406,25 @@ export default function Home() {
 					</div>
 				)}
 			</section>
+
+			<div className="w-full p-4 items-center justify-center my-8">
+				<div className="flex flex-row items-center justify-center p-4 bg-zinc-950 text-white rounded-2xl">
+					<img
+						width={20}
+						height={20}
+						className="rounded-full"
+						alt="coder_zi"
+						src="/images/coder_zi.png"
+					/>
+					<a
+						className="text white font-medium hover:underline hover:font-semibold"
+						href="x.com/coder_zi"
+					>
+						@coder_zi
+					</a>
+					<ChevronRight className="mx-2 size-5" />
+				</div>
+			</div>
 		</>
 	);
 }
