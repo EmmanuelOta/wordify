@@ -351,7 +351,7 @@ export default function Home() {
 						<h4 className="font-semibold text-2xl text-zinc-800 text-center p-2">
 							Download your PDF
 						</h4>
-						<div className="my-4 flex flex-col items-center justify-center bg-gradient-to-b from-zinc-100 via-white to-zinc-200 rounded-lg border border-zinc-200 w-full p-4">
+						<div className="my-4 flex flex-col items-center justify-center bg-gradient-to-b from-zinc-100 via-zinc-50 to-zinc-200 rounded-lg border border-zinc-200 w-full p-4">
 							<div className="w-full flex flex-row justify-between align-center border border-zinc-200 rounded-lg p-3 text-center text-zinc-800 w-full bg-gradient-to-b from-zinc-50 to-zinc-100">
 								<div
 									className="font-semibold w-full flex flex-row align-baseline items-center truncate mx-1 md:mx-7"
