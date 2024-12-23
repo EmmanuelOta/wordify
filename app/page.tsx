@@ -89,7 +89,7 @@ export default function Home() {
 		setFiles((current_files) => [...current_files, ...files]);
 	};
 
-	const downloadSingleFile = (file: Blob) => {
+	/**const downloadSingleFile = (file: Blob) => {
 		const link = document.createElement("a");
 		link.href = URL.createObjectURL(file);
 		link.download = `wordify-pdf.pdf`;
@@ -97,7 +97,7 @@ export default function Home() {
 		link.click();
 		document.body.removeChild(link);
 		URL.revokeObjectURL(link.href);
-	};
+	}; */
 
 	const downloadAllFiles = () => {
 		const link = document.createElement("a");
@@ -359,10 +359,10 @@ export default function Home() {
 				{pdf_file && (
 					<div className="flex flex-col bg-gradient-to-l from-zinc-50 to-zinc-100 items-center justify-center p-4 rounded-lg w-[95%] md:w-[80%] mb-14">
 						<h4 className="font-medium text-2xl text-zinc-800 text-center m-5">
-							Download your PDF files
+							Download your PDF
 						</h4>
-						<div className="my-4 flex flex-col items-center justify-center bg-gradient-to-b from-zinc-100 via-white to-zinc-200 rounded-lg border border-zinc-200">
-							<div className="w-full mx-5 flex flex-row justify-between align-center border border-zinc-300 rounded-lg p-3 text-center text-zinc-800 bg-gradient-to-r from-zinc-400 to-zinc-200">
+						<div className="my-4 flex flex-col items-center justify-center bg-gradient-to-b from-zinc-100 via-white to-zinc-200 rounded-lg border border-zinc-200 w-full">
+							<div className="w-full mx-5 flex flex-row justify-between align-center border border-zinc-300 rounded-lg p-3 text-center text-zinc-800 w-full bg-gradient-to-b from-zinc-50 to-zinc-100">
 								<div
 									className="font-semibold w-full flex flex-row align-baseline items-center truncate mx-1 md:mx-7"
 									title={`wordify-pdf.pdf`}
@@ -375,9 +375,9 @@ export default function Home() {
 									</p>
 								</div>
 
-								<div className="hidden md:container md:mx-7 md:flex md:items-center md:justify-center">
-									<p className="border border-blue-300 text-teal-300 text-xs p-2 rounded-md">
-										READY
+								<div className="container mx-7 flex items-center justify-center">
+									<p className="bg-green-700 text-white font-semibold p-1 px-2 text-[10px] rounded-3xl">
+										Ready
 									</p>
 								</div>
 
@@ -397,26 +397,26 @@ export default function Home() {
 									)}
 								</div>
 
-								<Button
+								{/** <Button
 									variant={"default"}
 									title="Download file"
 									onClick={() => downloadSingleFile(pdf_file)}
-									className="py-5"
+									className="py-5 mx-5"
 								>
 									<Download />
-								</Button>
+								</Button>*/}
 							</div>
 
 							<div className="container p-2 rounded-lg border border-zinc-300 flex flex-row items-center justify-between w-full my-2">
 								<Button
 									variant={"default"}
 									className={
-										"[&>*:last-child]:hover:translate-y-1 [&>*:last-child]:ease-in-out [&>*:last-child]:duration-200 my-2"
+										"py-5 [&>*:last-child]:hover:translate-y-1 [&>*:last-child]:ease-in-out [&>*:last-child]:duration-200 my-2"
 									}
 									onClick={downloadAllFiles}
 									title={"Download PDF"}
 								>
-									Download all
+									Download
 									<Download className="mx-1 size-6" />
 								</Button>
 							</div>
