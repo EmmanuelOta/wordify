@@ -407,11 +407,11 @@ export default function Home() {
 				)}
 			</section>
 
-			<div className="w-full p-4 items-center justify-center my-8">
+			<div className="w-full p-4 flex items-center justify-center my-8">
 				<div className="flex flex-row items-center justify-center p-4 bg-zinc-950 text-white rounded-3xl space-x-2 w-[40%] cursor-pointer [&>*:last-child]:hover:translate-x-1 [&>*:last-child]:ease-in-out [&>*:last-child]:duration-200">
 					<img
-						width={20}
-						height={20}
+						width={25}
+						height={25}
 						className="rounded-full"
 						alt="coder_zi"
 						src="/images/coder_zi.png"
