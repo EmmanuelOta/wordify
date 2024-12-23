@@ -206,7 +206,7 @@ export default function Home() {
 				)}
 
 				{files.length !== 0 && (
-					<div className="flex flex-col items-center justify-center p-4 bg-gradient-to-l from-zinc-50 to-zinc-100 rounded-lg w-[95%] md:w-[80%]">
+					<div className="flex flex-col items-center justify-center p-4 bg-gradient-to-l from-zinc-50 to-zinc-100 rounded-lg w-[95%] md:w-[80%] mb-10">
 						{/*Add more files button */}
 						<div className="container mx-auto flex items-center justify-end my-3">
 							<Button
@@ -349,7 +349,7 @@ export default function Home() {
 				)}
 
 				{pdf_file && !files && (
-					<div className="flex flex-col bg-gradient-to-l from-zinc-50 to-zinc-100 items-center justify-center p-4 rounded-lg w-[95%] md:w-[80%]">
+					<div className="flex flex-col bg-gradient-to-l from-zinc-50 to-zinc-100 items-center justify-center p-4 rounded-lg w-[95%] md:w-[80%] mb-10">
 						<h4 className="font-medium text-2xl text-zinc-800 text-center m-5">
 							Download your PDF files
 						</h4>
