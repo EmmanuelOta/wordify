@@ -417,6 +417,7 @@ export default function Home() {
 						src="/images/coder_zi.png"
 					/>
 					<a
+						target="_blank"
 						className="text white font-medium hover:underline hover:font-semibold"
 						href="https://x.com/coder_zi"
 					>
