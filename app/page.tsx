@@ -129,13 +129,19 @@ export default function Home() {
 				throw new Error("An error occured: ");
 			}
 
-			const img_converted_pdf = await response.arrayBuffer();
+			const pdf_blob = await response.blob();
 
-			const pdf_blob = new Blob([img_converted_pdf], {
+			/** const pdf_blob = new Blob([img_converted_pdf], {
 				type: "application/pdf",
-			});
+			});*/
 
 			setPdfFiles(pdf_blob);
+
+			toast({
+				variant: "default",
+				title: "Success!",
+				description: "Text extracted and PDF generated successfully",
+			});
 		} catch (error) {
 			console.error(error);
 			//display error with toastify
