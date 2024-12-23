@@ -173,7 +173,7 @@ export default function Home() {
 					Extract text from Images using our tool
 				</div>
 
-				{files.length === 0 && (
+				{files.length === 0 && !pdf_file && (
 					<div className="md:w-[80%]">
 						<Dropzone
 							onDrop={onDrop}
@@ -211,8 +211,8 @@ export default function Home() {
 					</div>
 				)}
 
-				{files.length !== 0 && (
-					<div className="flex flex-col items-center justify-center p-4 bg-gradient-to-l from-zinc-50 to-zinc-100 rounded-lg w-[95%] md:w-[80%] mb-10">
+				{files.length !== 0 && !pdf_file && (
+					<div className="flex flex-col items-center justify-center p-4 bg-gradient-to-l from-zinc-50 to-zinc-100 rounded-lg w-[95%] md:w-[80%] mb-14">
 						{/*Add more files button */}
 						<div className="container mx-auto flex items-center justify-end my-3">
 							<Button
@@ -354,8 +354,8 @@ export default function Home() {
 					</div>
 				)}
 
-				{pdf_file && !files && (
-					<div className="flex flex-col bg-gradient-to-l from-zinc-50 to-zinc-100 items-center justify-center p-4 rounded-lg w-[95%] md:w-[80%] mb-10">
+				{pdf_file && files.length !== 0 && (
+					<div className="flex flex-col bg-gradient-to-l from-zinc-50 to-zinc-100 items-center justify-center p-4 rounded-lg w-[95%] md:w-[80%] mb-14">
 						<h4 className="font-medium text-2xl text-zinc-800 text-center m-5">
 							Download your PDF files
 						</h4>
