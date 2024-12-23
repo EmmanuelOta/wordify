@@ -356,7 +356,7 @@ export default function Home() {
 					</div>
 				)}
 
-				{pdf_file && files.length !== 0 && (
+				{pdf_file && (
 					<div className="flex flex-col bg-gradient-to-l from-zinc-50 to-zinc-100 items-center justify-center p-4 rounded-lg w-[95%] md:w-[80%] mb-14">
 						<h4 className="font-medium text-2xl text-zinc-800 text-center m-5">
 							Download your PDF files
