@@ -418,7 +418,7 @@ export default function Home() {
 					/>
 					<a
 						className="text white font-medium hover:underline hover:font-semibold"
-						href="x.com/coder_zi"
+						href="https://x.com/coder_zi"
 					>
 						Built by @coder_zi
 					</a>
