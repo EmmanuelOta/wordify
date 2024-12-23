@@ -37,6 +37,8 @@ export default function Home() {
 	//state for managing file size limit
 	const [max_file_size, setMaxFileSize] = useState(false);
 
+	console.log("Pdf file: ", pdf_file);
+
 	//useEffect to check if any file sizes are equal to or greater than 32mb
 	useEffect(() => {
 		files.forEach((file) => {
