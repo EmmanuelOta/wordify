@@ -18,19 +18,11 @@ const libre_baskerville = Libre_Baskerville({
 	style: "italic",
 });
 
-interface UserFile {
-	file: Blob;
-	name: string;
-}
-
 export default function Home() {
 	const [files, setFiles] = useState<File[]>([]);
 
 	//state to manage converted pdf files
-	const [pdf_files, setPdfFiles] = useState<UserFile[]>([]);
-
-	//array for storing errored files
-	const rejected_files: string[] = [];
+	const [pdf_file, setPdfFiles] = useState<Blob | null>(null);
 
 	const [loading, setLoading] = useState<boolean>(false);
 
@@ -71,7 +63,7 @@ export default function Home() {
 			toast({
 				variant: "destructive",
 				title: "Invalid file type",
-				description: `${file.name} is an invalid type!!`,
+				description: `${file.name} has an invalid type!!`,
 			});
 		});
 
@@ -95,10 +87,10 @@ export default function Home() {
 		setFiles((current_files) => [...current_files, ...files]);
 	};
 
-	const downloadSingleFile = (file: UserFile) => {
+	const downloadSingleFile = (file: Blob) => {
 		const link = document.createElement("a");
-		link.href = URL.createObjectURL(file.file);
-		link.download = `${file.name}.pdf`;
+		link.href = URL.createObjectURL(file);
+		link.download = `wordify-pdf.pdf`;
 		document.body.appendChild(link);
 		link.click();
 		document.body.removeChild(link);
@@ -106,65 +98,52 @@ export default function Home() {
 	};
 
 	const downloadAllFiles = () => {
-		pdf_files.forEach((file: { file: Blob; name: string }) => {
-			const link = document.createElement("a");
-			link.href = URL.createObjectURL(file.file);
-			link.download = `${file.name}.pdf`;
-			document.body.appendChild(link);
-			link.click();
-			document.body.removeChild(link);
-			URL.revokeObjectURL(link.href);
-		});
+		const link = document.createElement("a");
+		link.href = URL.createObjectURL(pdf_file as Blob);
+		link.download = `wordify-pdf.pdf`;
+		document.body.appendChild(link);
+		link.click();
+		document.body.removeChild(link);
+		URL.revokeObjectURL(link.href);
 	};
 
 	const uploadFile = async () => {
 		try {
 			setLoading(true);
-			//make a request to the express api endpoint in order to extract text from pdf;
-			const get_pdf_files = files.map(async (pdf_file) => {
-				const word_file_formdata = new FormData();
-				word_file_formdata.append("word_file", pdf_file);
 
-				const response = await fetch(
-					`${process.env.NEXT_PUBLIC_CLIPIFY_FIREBASE_FUNCTION_BACKEND}/convert-word-to-pdf`,
-					{
-						method: "POST",
-						body: word_file_formdata,
-					}
-				);
-
-				if (!response.ok) {
-					rejected_files.push(pdf_file.name);
-					throw new Error("An error occured: ");
+			//first loop through image files and attach them to a form data
+			const img_file_formdata = new FormData();
+			for (let i = 0; i < files.length; i++) {
+				img_file_formdata.append("images", files[i]);
+			}
+			//make a request to the express api endpoint in to convert pdf to text;
+			const response = await fetch(
+				`${process.env.NEXT_PUBLIC_WORDIFY_BACKEND}`,
+				{
+					method: "POST",
+					body: img_file_formdata,
 				}
+			);
 
-				const converted_pdf = await response.arrayBuffer();
+			if (!response.ok) {
+				throw new Error("An error occured: ");
+			}
 
-				const pdf_blob = new Blob([converted_pdf], {
-					type: "application/pdf",
-				});
-				return { file: pdf_blob, name: pdf_file.name.split(".")[0] };
+			const img_converted_pdf = await response.arrayBuffer();
+
+			const pdf_blob = new Blob([img_converted_pdf], {
+				type: "application/pdf",
 			});
 
-			// accept all settled promises i.e both resolved and rejected ones
-			const results = await Promise.allSettled(get_pdf_files);
-
-			//filter out resolved ones
-			const resolved_pdf_files = results
-				.filter((file) => file.status === "fulfilled")
-				.map((successful_files) => successful_files.value);
-			setPdfFiles(resolved_pdf_files);
-
-			//display rejected files with toastify
-			rejected_files.forEach((file) =>
-				toast({
-					variant: "destructive",
-					title: "Network Error",
-					description: `We failed to convert your ${file}, check your internet connection and try again`,
-				})
-			);
+			setPdfFiles(pdf_blob);
 		} catch (error) {
 			console.error(error);
+			//display error with toastify
+			toast({
+				variant: "destructive",
+				title: "Network Error",
+				description: `We failed to process your file(s), check your internet connection and try again`,
+			});
 		} finally {
 			setLoading(false);
 			setFiles([]);
@@ -369,64 +348,56 @@ export default function Home() {
 					</div>
 				)}
 
-				{pdf_files.length !== 0 && (
+				{pdf_file && !files && (
 					<div className="flex flex-col bg-gradient-to-l from-zinc-100 to-zinc-200 items-center justify-center p-4 rounded-lg w-[95%] md:w-[80%]">
 						<h4 className="font-medium text-2xl text-zinc-800 text-center m-5">
 							Download your PDF files
 						</h4>
 						<div className="my-4 flex flex-col items-center justify-center bg-gradient-to-b from-zinc-300 to-zinc-400 rounded-lg border border-slate-400">
-							{pdf_files.map((file, index) => (
+							<div className="w-full mx-5 flex flex-row justify-between align-center border border-slate-400 rounded-lg p-3 text-center text-zinc-800 bg-gradient-to-r from-zinc-400 to-zinc-200">
 								<div
-									className="w-full mx-5 flex flex-row justify-between align-center border border-slate-400 rounded-lg p-3 text-center text-zinc-800 bg-gradient-to-r from-zinc-400 to-zinc-200"
-									key={index}
+									className="font-semibold w-full flex flex-row align-baseline items-center truncate mx-1 md:mx-7"
+									title={`wordify-pdf.pdf`}
 								>
-									<div
-										className="font-semibold w-full flex flex-row align-baseline items-center truncate mx-1 md:mx-7"
-										title={`${file.name}.pdf`}
-									>
-										<div className="hidden md:flex">
-											<File className="mx-1 size-5" />
-										</div>
-										<p className="text-xs md:text-sm truncate w-full md:w-max p-2">
-											{`${file.name}.pdf`}
-										</p>
+									<div className="hidden md:flex">
+										<File className="mx-1 size-5" />
 									</div>
-
-									<div className="hidden md:container md:mx-7 md:flex md:items-center md:justify-center">
-										<p className="border border-blue-300 text-teal-300 text-xs p-2 rounded-md">
-											READY
-										</p>
-									</div>
-
-									<div className="text-sm font-medium flex flex-row">
-										{file.file.size.toString().length <=
-										5 ? (
-											<p>
-												{(
-													file.file.size / 1024
-												).toFixed(2)}{" "}
-												KB
-											</p>
-										) : (
-											<p>
-												{(
-													file.file.size / 1048576
-												).toFixed(2)}{" "}
-												MB
-											</p>
-										)}
-									</div>
-
-									<Button
-										variant={"default"}
-										title="Download file"
-										onClick={() => downloadSingleFile(file)}
-										className="py-5"
-									>
-										<Download />
-									</Button>
+									<p className="text-xs md:text-sm truncate w-full md:w-max p-2">
+										{`wordify-pdf.pdf`}
+									</p>
 								</div>
-							))}
+
+								<div className="hidden md:container md:mx-7 md:flex md:items-center md:justify-center">
+									<p className="border border-blue-300 text-teal-300 text-xs p-2 rounded-md">
+										READY
+									</p>
+								</div>
+
+								<div className="text-sm font-medium flex flex-row">
+									{pdf_file.size.toString().length <= 5 ? (
+										<p>
+											{(pdf_file.size / 1024).toFixed(2)}{" "}
+											KB
+										</p>
+									) : (
+										<p>
+											{(pdf_file.size / 1048576).toFixed(
+												2
+											)}{" "}
+											MB
+										</p>
+									)}
+								</div>
+
+								<Button
+									variant={"default"}
+									title="Download file"
+									onClick={() => downloadSingleFile(pdf_file)}
+									className="py-5"
+								>
+									<Download />
+								</Button>
+							</div>
 
 							<div className="container p-2 rounded-lg border border-slate-300 flex flex-row items-center justify-between w-full my-2">
 								<Button
