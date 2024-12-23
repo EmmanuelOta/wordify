@@ -138,6 +138,7 @@ export default function Home() {
 			});*/
 
 			setPdfFiles(pdf_blob);
+			setFiles([]);
 
 			toast({
 				variant: "default",
@@ -154,7 +155,6 @@ export default function Home() {
 			});
 		} finally {
 			setLoading(false);
-			setFiles([]);
 		}
 	};
 
