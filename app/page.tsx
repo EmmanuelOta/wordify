@@ -474,9 +474,9 @@ export default function Home() {
 					<ChevronRight className="mx-2 size-5" />
 				</div>
 
-				<div className="my-24">
+				<div className="my-24 w-full p-4">
 					<div
-						className={`absolute top-[65%] left-[40%] p-2 w-max space-y-2 bg-zinc-900 text-white font-medium rounded-lg ${
+						className={`absolute top-[65%] left-[45%] w-[50%] p-2 w-max space-y-2 bg-zinc-900 text-white font-medium rounded-lg ${
 							is_social_popover_open ? "block" : "hidden"
 						}`}
 					>
