@@ -454,7 +454,7 @@ export default function Home() {
 				)}
 			</section>
 
-			<div className="relative w-full p-4 flex items-center justify-center my-8">
+			<div className="w-full p-4 flex flex-col items-center justify-center my-8">
 				<div
 					className="flex flex-row items-center justify-center p-4 bg-zinc-950 text-white rounded-3xl space-x-2 w-[70%] md:w-[30%] cursor-pointer [&>*:last-child]:hover:translate-x-1 [&>*:last-child]:ease-in-out [&>*:last-child]:duration-200"
 					onClick={() =>
@@ -474,9 +474,9 @@ export default function Home() {
 					<ChevronRight className="mx-2 size-5" />
 				</div>
 
-				<div className="my-24 w-full p-4">
+				<div className="relative w-full p-4 py-24">
 					<div
-						className={`absolute top-[65%] left-[45%] w-[50%] p-2 w-max space-y-2 bg-zinc-900 text-white font-medium rounded-lg ${
+						className={`absolute top-[5%] left-[45%] w-[50%] p-2 w-max space-y-2 bg-zinc-900 text-white font-medium rounded-lg ${
 							is_social_popover_open ? "block" : "hidden"
 						}`}
 					>
