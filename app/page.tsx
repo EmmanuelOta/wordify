@@ -6,6 +6,9 @@ import { Image } from "lucide-react";
 import { File } from "lucide-react";
 import { Download } from "lucide-react";
 import { ChevronRight } from "lucide-react";
+import { Instagram } from "lucide-react";
+import { Linkedin } from "lucide-react";
+import { Twitter } from "lucide-react";
 import Dropzone from "react-dropzone";
 
 import { Libre_Baskerville } from "next/font/google";
@@ -38,7 +41,51 @@ export default function Home() {
 	//state for managing file size limit
 	const [max_file_size, setMaxFileSize] = useState(false);
 
-	console.log("Pdf file: ", pdf_file);
+	//list of social media handles
+	const social_handles = [
+		{
+			name: "Twitter",
+			link: "https://x.com/coder_zi",
+			icon: <Twitter className="size-5" />,
+		},
+		{
+			name: "Instagram",
+			link: "https://instagram.com/coder_zi",
+			icon: <Instagram className="size-5" />,
+		},
+		{
+			name: "LinkedIn",
+			link: "https://linkedin.com/in/coder-zi",
+			icon: <Linkedin className="size-5" />,
+		},
+	];
+
+	//state for handling social media popover UI
+	const [is_social_popover_open, setSocialPopoverOpen] = useState(false);
+
+	//ref for popover
+	const popover_ref = useRef<null | HTMLDivElement>(null);
+
+	//useEffect for monitoring if click occured inside the popover, if not close popover
+	useEffect(() => {
+		if (!is_social_popover_open) {
+			return;
+		}
+
+		const handleClick = (e: MouseEvent) => {
+			if (popover_ref.current?.contains(e.target as Node)) {
+				return;
+			}
+
+			setSocialPopoverOpen(false);
+		};
+
+		document.addEventListener("click", handleClick);
+
+		return () => {
+			document.removeEventListener("click", handleClick);
+		};
+	}, [is_social_popover_open]);
 
 	//useEffect to check if any file sizes are equal to or greater than 32mb
 	useEffect(() => {
@@ -407,8 +454,13 @@ export default function Home() {
 				)}
 			</section>
 
-			<div className="w-full p-4 flex items-center justify-center my-8">
-				<div className="flex flex-row items-center justify-center p-4 bg-zinc-950 text-white rounded-3xl space-x-2 w-[70%] md:w-[30%] cursor-pointer [&>*:last-child]:hover:translate-x-1 [&>*:last-child]:ease-in-out [&>*:last-child]:duration-200">
+			<div className="relative w-full p-4 flex items-center justify-center my-8">
+				<div
+					className="flex flex-row items-center justify-center p-4 bg-zinc-950 text-white rounded-3xl space-x-2 w-[70%] md:w-[30%] cursor-pointer [&>*:last-child]:hover:translate-x-1 [&>*:last-child]:ease-in-out [&>*:last-child]:duration-200"
+					onClick={() =>
+						setSocialPopoverOpen(!is_social_popover_open)
+					}
+				>
 					<img
 						width={25}
 						height={25}
@@ -416,14 +468,31 @@ export default function Home() {
 						alt="coder_zi"
 						src="/images/coder_zi.png"
 					/>
-					<a
-						target="_blank"
-						className="text white font-medium hover:underline hover:font-semibold"
-						href="https://x.com/coder_zi"
-					>
+					<span className="text white font-medium">
 						Built by @coder_zi
-					</a>
+					</span>
 					<ChevronRight className="mx-2 size-5" />
+				</div>
+
+				<div className="my-24">
+					<div
+						className={`absolute top-5 left-[65%] p-2 w-max space-y-2 bg-zinc-900 text-white font-medium rounded-lg ${
+							is_social_popover_open ? "block" : "hidden"
+						}`}
+					>
+						{social_handles.map((social_handle) => (
+							<div key={social_handle.name}>
+								<a
+									href={social_handle.link}
+									target="_blank"
+									className="flex items-center justify-center space-x-2 hover:bg-zinc-800 p-2 rounded-md font-semibold"
+								>
+									<span>{social_handle.icon}</span>
+									<span>{social_handle.name}</span>
+								</a>
+							</div>
+						))}
+					</div>
 				</div>
 			</div>
 		</>
