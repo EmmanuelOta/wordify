@@ -1,14 +1,17 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { Plus } from "lucide-react";
-import { Image } from "lucide-react";
-import { File } from "lucide-react";
-import { Download } from "lucide-react";
-import { ChevronRight } from "lucide-react";
-import { Instagram } from "lucide-react";
-import { Linkedin } from "lucide-react";
-import { Twitter } from "lucide-react";
+import {
+	Plus,
+	Image,
+	File,
+	Download,
+	ChevronRight,
+	Instagram,
+	Linkedin,
+	Twitter,
+	ExternalLink,
+} from "lucide-react";
 import Dropzone from "react-dropzone";
 
 import { Libre_Baskerville } from "next/font/google";
@@ -198,7 +201,7 @@ export default function Home() {
 
 	return (
 		<>
-			<section className="flex flex-col items-center justify-center p-4 space-y-8">
+			<section className="flex flex-col items-center justify-center p-4 space-y-8 bg-gradient-to-b from-zinc-50 via-zinc-200 to-zinc-100">
 				<div>
 					<img
 						src="/images/wordify.jpeg"
@@ -226,7 +229,7 @@ export default function Home() {
 								<div
 									className={
 										dropzone_focused
-											? "bg-zinc-50 flex flex-col justify-center items-center my-9 mx-9 py-9 p-20 border border-zinc-300 md:ml-20 md:p-15 lg:p-36 rounded-lg"
+											? "bg-zinc-200 flex flex-col justify-center items-center my-9 mx-9 py-9 p-20 border border-zinc-300 md:ml-20 md:p-15 lg:p-36 rounded-lg"
 											: "bg-zinc-100 flex flex-col justify-center items-center my-9 mx-9 py-9 p-20 border border-zinc-300 md:ml-20 md:p-15 lg:p-36 rounded-lg"
 									}
 									{...getRootProps()}
@@ -252,7 +255,7 @@ export default function Home() {
 				)}
 
 				{files.length !== 0 && !pdf_file && (
-					<div className="flex flex-col items-center justify-center p-4 bg-gradient-to-l from-zinc-50 to-zinc-100 rounded-lg w-[95%] md:w-[80%] mb-14">
+					<div className="flex flex-col items-center justify-center p-4 border border-zinc-300 shadow-md bg-gradient-to-b from-zinc-100 to-zinc-200 rounded-lg w-[95%] md:w-[80%] mb-14">
 						{/*Add more files button */}
 						<div className="container mx-auto flex items-center justify-end my-3">
 							<Button
@@ -452,49 +455,72 @@ export default function Home() {
 						</div>
 					</div>
 				)}
-			</section>
 
-			<div className="w-full p-4 flex flex-col items-center justify-center my-8">
-				<div
-					className="flex flex-row items-center justify-center p-4 bg-zinc-950 text-white rounded-3xl space-x-2 w-[70%] md:w-[30%] cursor-pointer [&>*:last-child]:hover:translate-x-1 [&>*:last-child]:ease-in-out [&>*:last-child]:duration-200"
-					onClick={() =>
-						setSocialPopoverOpen(!is_social_popover_open)
-					}
-				>
-					<img
-						width={25}
-						height={25}
-						className="rounded-full"
-						alt="coder_zi"
-						src="/images/coder_zi.png"
-					/>
-					<span className="text white font-medium">
-						Built by @coder_zi
-					</span>
-					<ChevronRight className="mx-2 size-5" />
-				</div>
-
-				<div className="relative w-full p-4 py-24">
+				<div className="w-full p-4 flex flex-col items-center justify-center ">
 					<div
-						className={`absolute top-[5%] left-[45%] w-[50%] p-2 w-max space-y-2 bg-zinc-900 text-white font-medium rounded-lg ${
-							is_social_popover_open ? "block" : "hidden"
-						}`}
+						className="flex flex-row items-center justify-center p-4 bg-zinc-950 text-white rounded-3xl space-x-2 w-[70%] md:w-[30%] cursor-pointer [&>*:last-child]:hover:translate-x-1 [&>*:last-child]:ease-in-out [&>*:last-child]:duration-200"
+						onClick={() =>
+							setSocialPopoverOpen(!is_social_popover_open)
+						}
 					>
-						{social_handles.map((social_handle) => (
-							<div key={social_handle.name}>
-								<a
-									href={social_handle.link}
-									target="_blank"
-									className="flex items-center justify-center space-x-2 hover:bg-zinc-800 p-2 rounded-md font-semibold"
-								>
-									<span>{social_handle.icon}</span>
-									<span>{social_handle.name}</span>
-								</a>
-							</div>
-						))}
+						<img
+							width={25}
+							height={25}
+							className="rounded-full"
+							alt="coder_zi"
+							src="/images/coder_zi.png"
+						/>
+						<span className="text white font-medium">
+							Built by @coder_zi
+						</span>
+						<ChevronRight className="mx-2 size-5" />
+					</div>
+
+					<div className="relative w-full p-4">
+						<div
+							className={`absolute top-[5%] left-[45%] w-[50%] p-2 w-max space-y-2 bg-zinc-900 text-white font-medium rounded-lg ${
+								is_social_popover_open ? "block" : "hidden"
+							}`}
+						>
+							{social_handles.map((social_handle) => (
+								<div key={social_handle.name}>
+									<a
+										href={social_handle.link}
+										target="_blank"
+										className="flex items-center justify-center space-x-2 hover:bg-zinc-800 p-2 rounded-md font-semibold"
+									>
+										<span>{social_handle.icon}</span>
+										<span>{social_handle.name}</span>
+									</a>
+								</div>
+							))}
+						</div>
 					</div>
 				</div>
-			</div>
+			</section>
+
+			<section className="flex flex-col items-center justify-center bg-gradient-to-r from-zinc-50 via-zinc-200 to-zinc-100">
+				<div className="flex w-full items-center justify-center my-6">
+					<div className="flex flex-col items-center justify-center space-y-3 w-[90%] lg:w-[40%]">
+						<p className="text-lg font-medium text-center">
+							I built a tool that converts PDF, DOC, DOCX files
+							into human sounding audio books
+						</p>
+						<img
+							src="/images/clipifai.png"
+							width={400}
+							className="rounded-lg"
+						/>
+						<a
+							className="inline-flex items-center justify-center w-full gap-2 whitespace-nowrap rounded-lg text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 bg-primary text-primary-foreground shadow hover:bg-primary/90 h-9 px-4 py-3"
+							href="https://clipifai.vercel.app"
+						>
+							Check it out{" "}
+							<ExternalLink className="mx-1 size-5" />
+						</a>
+					</div>
+				</div>
+			</section>
 		</>
 	);
 }
