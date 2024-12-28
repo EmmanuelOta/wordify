@@ -13,6 +13,7 @@ import {
 	ExternalLink,
 } from "lucide-react";
 import Dropzone from "react-dropzone";
+import { FeedbackWidget } from "@mindship/react";
 
 import { Libre_Baskerville } from "next/font/google";
 import React, { useState, useEffect, useRef } from "react";
@@ -522,6 +523,15 @@ export default function Home() {
 					</div>
 				</div>
 			</section>
+
+			<FeedbackWidget
+				teamId={process.env.NEXT_PUBLIC_MINDSHIP_TEAM_ID!}
+				title="Rate your experience"
+				description="Your feedback helps us improve"
+				position="bottom-right"
+				primaryColor="#0066ff"
+				textColor="#333333"
+			/>
 		</>
 	);
 }
