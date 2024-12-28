@@ -514,8 +514,9 @@ export default function Home() {
 						<a
 							className="inline-flex items-center justify-center w-full gap-2 whitespace-nowrap rounded-lg text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 bg-primary text-primary-foreground shadow hover:bg-primary/90 h-9 px-4 py-3"
 							href="https://clipifai.vercel.app"
+							target="_blank"
 						>
-							Check it out{" "}
+							Check it out
 							<ExternalLink className="mx-1 size-5" />
 						</a>
 					</div>
