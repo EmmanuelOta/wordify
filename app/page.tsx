@@ -398,7 +398,7 @@ export default function Home() {
 				)}
 
 				{pdf_file && (
-					<div className="flex flex-col bg-gradient-to-l from-zinc-50 to-zinc-100 items-center justify-center p-4 rounded-lg w-[95%] md:w-[80%] mb-14">
+					<div className="flex flex-col bg-gradient-to-l from-zinc-50 to-zinc-100 items-center justify-center p-4 rounded-lg w-[95%] md:w-[80%] mb-14 shadow-md">
 						<h4 className="font-semibold text-2xl text-zinc-800 text-center p-2">
 							Download your PDF
 						</h4>
@@ -439,7 +439,7 @@ export default function Home() {
 								</div>
 							</div>
 
-							<div className="flex items-center justify-center py-5 rounded-lg border border-zinc-100 w-full my-5">
+							<div className="flex items-center justify-center py-5 rounded-lg border border-zinc-300 w-full my-5">
 								<Button
 									variant={"default"}
 									className={
