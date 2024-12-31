@@ -7,7 +7,7 @@ import { Toaster } from "@/components/ui/toaster";
 export const metadata = {
 	title: "Wordify - Extract text from Images,",
 	description:
-		"Extract text from images using OCR and convert extracted text to PDF format in a few clicks.",
+		"Extract text from images using OCR and convert extracted text to a PDF file in a few clicks.",
 };
 
 const inter = Inter({ style: "normal", subsets: ["latin"] });
