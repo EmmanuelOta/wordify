@@ -320,10 +320,11 @@ export default function Home() {
 										</p>
 									)}
 								</div>
-								<div
+								<button
 									title="Remove file"
 									onClick={() => removeFile(index)}
-									className="flex items-center justify-baseline mx-5 cursor-pointer hover:bg-zinc-300 rounded-md"
+									disabled={loading ? true : false}
+									className="flex items-center justify-baseline mx-5 cursor-pointer hover:bg-zinc-300 rounded-md disabled:cursor-not-allowed"
 								>
 									<svg
 										xmlns="http://www.w3.org/2000/svg"
@@ -339,7 +340,7 @@ export default function Home() {
 											d="M6 18 18 6M6 6l12 12"
 										/>
 									</svg>
-								</div>
+								</button>
 							</div>
 						))}
 
