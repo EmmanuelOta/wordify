@@ -4,6 +4,8 @@ import "./globals.css";
 
 import { Toaster } from "@/components/ui/toaster";
 
+import GoogleAnalytics from "@/components/GoogleAnalytics/GoogleAnalytics";
+
 export const metadata = {
 	title: "Wordify - Extract text from Images,",
 	description:
@@ -24,6 +26,8 @@ export default function RootLayout({
 					name="google-site-verification"
 					content="12z_9nW2zfWHVbFZYYsPch9kjz6NZNJ1Kh3m-q3lPDk"
 				/>
+
+				<GoogleAnalytics />
 			</head>
 			<body className={`${inter.className} antialiased`}>
 				<main>{children}</main>
