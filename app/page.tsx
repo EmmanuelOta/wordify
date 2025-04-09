@@ -11,6 +11,7 @@ import {
 	Linkedin,
 	Twitter,
 	ExternalLink,
+	ChevronDown,
 } from "lucide-react";
 import Dropzone from "react-dropzone";
 import { FeedbackWidget } from "@mindship/react";
@@ -19,6 +20,12 @@ import { Libre_Baskerville } from "next/font/google";
 import React, { useState, useEffect, useRef } from "react";
 
 import { useToast } from "@/hooks/use-toast";
+import {
+	DropdownMenu,
+	DropdownMenuContent,
+	DropdownMenuItem,
+	DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 const libre_baskerville = Libre_Baskerville({
 	weight: "400",
@@ -30,7 +37,10 @@ export default function Home() {
 	const [files, setFiles] = useState<File[]>([]);
 
 	//state to manage converted pdf files
-	const [pdf_file, setPdfFiles] = useState<Blob | null>(null);
+	const [pdf_file, setPdfFile] = useState<Blob | null>(null);
+
+	//state to manage convertde text files
+	const [text_file, setTextFile] = useState<Blob | null>(null);
 
 	const [loading, setLoading] = useState<boolean>(false);
 
@@ -141,10 +151,20 @@ export default function Home() {
 		setFiles((current_files) => [...current_files, ...files]);
 	};
 
-	const downloadFile = () => {
+	const downloadPdf = () => {
 		const link = document.createElement("a");
 		link.href = URL.createObjectURL(pdf_file as Blob);
 		link.download = `wordify-pdf.pdf`;
+		document.body.appendChild(link);
+		link.click();
+		document.body.removeChild(link);
+		URL.revokeObjectURL(link.href);
+	};
+
+	const downloadTextFile = () => {
+		const link = document.createElement("a");
+		link.href = URL.createObjectURL(text_file as Blob);
+		link.download = "wordify-text.txt";
 		document.body.appendChild(link);
 		link.click();
 		document.body.removeChild(link);
@@ -173,13 +193,21 @@ export default function Home() {
 				throw new Error("An error occured: ");
 			}
 
-			const pdf_blob = await response.blob();
+			const { pdf, text } = await response.json();
 
-			/** const pdf_blob = new Blob([img_converted_pdf], {
-				type: "application/pdf",
-			});*/
+			// Convert base64 PDF to Blob
+			const pdf_binary = atob(pdf);
+			const pdf_array = new Uint8Array(pdf_binary.length);
+			for (let i = 0; i < pdf_binary.length; i++) {
+				pdf_array[i] = pdf_binary.charCodeAt(i);
+			}
+			const pdf_blob = new Blob([pdf_array], { type: "application/pdf" });
 
-			setPdfFiles(pdf_blob);
+			// Convert base64 text to Blob
+			const text_blob = new Blob([atob(text)], { type: "text/plain" });
+
+			setPdfFile(pdf_blob);
+			setTextFile(text_blob);
 			setFiles([]);
 
 			toast({
@@ -442,17 +470,29 @@ export default function Home() {
 							</div>
 
 							<div className="flex items-center justify-center py-5 rounded-lg border border-zinc-300 w-full my-5">
-								<Button
-									variant={"default"}
-									className={
-										"py-5 [&>*:last-child]:hover:translate-y-1 [&>*:last-child]:ease-in-out [&>*:last-child]:duration-200 my-2 w-[50%]"
-									}
-									onClick={downloadFile}
-									title={"Download PDF"}
-								>
-									Download
-									<Download className="mx-1 size-6" />
-								</Button>
+								<DropdownMenu>
+									<DropdownMenuTrigger asChild>
+										<Button
+											variant="default"
+											className="py-5 w-[50%]"
+										>
+											Download
+											<ChevronDown className="mx-1 h-4 w-4" />
+										</Button>
+									</DropdownMenuTrigger>
+									<DropdownMenuContent>
+										<DropdownMenuItem onClick={downloadPdf}>
+											Download PDF
+											<Download className="mx-1 size-4" />
+										</DropdownMenuItem>
+										<DropdownMenuItem
+											onClick={downloadTextFile}
+										>
+											Download Text
+											<Download className="mx-1 size-4" />
+										</DropdownMenuItem>
+									</DropdownMenuContent>
+								</DropdownMenu>
 							</div>
 						</div>
 					</div>
